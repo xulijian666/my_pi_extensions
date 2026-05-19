@@ -10,6 +10,8 @@
 | ⏱️ 耗时计时器 | `response-timer-advanced.ts` | 显示回答耗时和历史统计 |
 | 📋 复制会话 | `copy-conversation.ts` | 复制会话内容到剪贴板 |
 | 📝 计划模式 | `plan-mode/` | 只读探索模式，用于规划方案 |
+| ⚠️ 危险命令拦截 | `dangerous-commands.ts` | 拦截 rm -rf 等危险 bash 命令 |
+| 🛡️ 会话保护 | `confirm-destructive.ts` | 清除/切换会话前确认 |
 
 ---
 
@@ -106,6 +108,50 @@ const CONFIG = {
 |------|------|
 | `/plan` | 进入计划模式 |
 | `/plan-off` | 退出计划模式 |
+
+---
+
+## ⚠️ 危险命令拦截 (dangerous-commands)
+
+在执行危险 bash 命令前弹出确认框，防止误操作。
+
+### 拦截的命令类型
+
+| 类型 | 示例 |
+|------|------|
+| 删除 | `rm -rf /`, `rm -rf ~`, `rm -rf .` |
+| 权限 | `chmod 777`, `chmod +s` |
+| Git | `git push --force`, `git reset --hard` |
+| 下载执行 | `curl xxx | bash`, `wget xxx | sh` |
+| 磁盘 | `mkfs`, `dd of=/dev/...` |
+| 系统 | `shutdown`, `reboot`, `sudo rm` |
+
+### 工作方式
+
+- 拦截 `tool_call` 事件中的 bash 命令
+- 匹配危险模式后弹出确认框
+- 显示危险原因和完整命令
+- 用户取消则阻止执行
+
+---
+
+## 🛡️ 会话保护 (confirm-destructive)
+
+在清除或切换会话前弹出确认框，防止误操作。
+
+### 保护的操作
+
+| 操作 | 说明 |
+|------|------|
+| 清除会话 | 执行 `/clear` 或新建会话 |
+| 切换会话 | 恢复其他会话 |
+| 分叉会话 | 从某个节点创建分叉 |
+
+### 工作方式
+
+- 检测未保存的消息
+- 有未保存内容时弹出警告
+- 用户确认后才执行操作 |
 
 ---
 
