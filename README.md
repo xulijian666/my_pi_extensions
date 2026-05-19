@@ -24,7 +24,7 @@
 |------|------|
 | `/sound` | 开关声音提示 |
 | `/sound-test` | 测试声音 |
-| `/sound-threshold <秒>` | 设置触发阈值（默认 5 秒） |
+| `/sound-threshold <秒>` | 设置触发阈值（默认 15 秒） |
 
 ### 配置
 
@@ -33,7 +33,7 @@
 ```typescript
 const CONFIG = {
     enabled: true,          // 是否启用
-    thresholdSeconds: 5,    // 超过多少秒才提示
+    thresholdSeconds: 15,   // 超过多少秒才提示
 };
 ```
 
