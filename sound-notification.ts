@@ -9,7 +9,7 @@ import { exec } from "child_process";
 // 配置
 const CONFIG = {
 	enabled: true,
-	thresholdSeconds: 15,
+	thresholdSeconds: 10,
 };
 
 // 状态
